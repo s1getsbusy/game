@@ -337,19 +337,29 @@ class Game {
 
   _startLevel(lv) {
     this.level = lv;
-    const count = Math.min(3 + Math.floor(lv * 0.8), 8);
-    const gapDeg = Math.max(C.initGap - (lv - 1) * C.gapShrink, C.minGap);
-    const speedMult = 1 + (lv - 1) * C.speedUp;
+    let count = Math.min(3 + Math.floor(lv * 0.8), 8);
+    let gapDeg = Math.max(C.initGap - (lv - 1) * C.gapShrink, C.minGap);
+    let speedMult = 1 + (lv - 1) * C.speedUp;
+
+    if (lv >= 10) {
+      count = 20;
+      gapDeg = 1;
+      speedMult *= 4;
+    }
     const maxR = Math.min(this.w, this.h) * (MOBILE ? 0.35 : 0.37);
     const minR = MOBILE ? 42 : 52;
     this.rings = [];
     // Determine ghost count based on level
-    const ghostCount = lv < 3 ? 0 : lv < 5 ? 1 : lv < 7 ? 2 : Math.min(count - 2, 4);
+    const ghostCount = lv >= 10 ? count - 1 : (lv < 3 ? 0 : lv < 5 ? 1 : lv < 7 ? 2 : Math.min(count - 2, 4));
     // Pick which rings ghost (never the first ring the player is on)
     const ghostSet = new Set();
-    while (ghostSet.size < ghostCount) {
-      const idx = 1 + Math.floor(Math.random() * (count - 1));
-      ghostSet.add(idx);
+    if (ghostCount > 0) {
+      let attempts = 0;
+      while (ghostSet.size < ghostCount && attempts < 100) {
+        const idx = 1 + Math.floor(Math.random() * (count - 1));
+        ghostSet.add(idx);
+        attempts++;
+      }
     }
     for (let i = 0; i < count; i++) {
       const t = count > 1 ? i / (count - 1) : 0;
