@@ -308,6 +308,10 @@ class Game {
       this.sfx.cheat();
       this._startLevel(10);
       show('WARP TO LEVEL 10', 'success');
+    } else if (code === '8071') {
+      this.sfx.cheat();
+      this._startLevel(8);
+      show('WARP TO LEVEL 8', 'success');
     } else {
       show('INVALID CODE', 'error');
     }
