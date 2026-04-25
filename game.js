@@ -350,15 +350,15 @@ class Game {
     let speedMult = 1 + (lv - 1) * C.speedUp;
 
     if (lv >= 10) {
-      count = 20;
-      gapDeg = 1;
-      speedMult *= 4;
+      count = 9;
+      gapDeg = 4;
+      speedMult = 2.8;
     }
     const maxR = Math.min(this.w, this.h) * (MOBILE ? 0.35 : 0.37);
     const minR = MOBILE ? 42 : 52;
     this.rings = [];
     // Determine ghost count based on level
-    const ghostCount = lv >= 10 ? count - 1 : (lv < 3 ? 0 : lv < 5 ? 1 : lv < 7 ? 2 : Math.min(count - 2, 4));
+    const ghostCount = lv >= 10 ? 5 : (lv < 3 ? 0 : lv < 5 ? 1 : lv < 7 ? 2 : Math.min(count - 2, 4));
     // Pick which rings ghost (never the first ring the player is on)
     const ghostSet = new Set();
     if (ghostCount > 0) {
@@ -460,8 +460,8 @@ class Game {
     if (this.state === 'dying') {
       this.stateT += dt;
       for (const r of this.rings) r.update(dt);
-      // DEATH RESETS TO LEVEL 1
-      if (this.stateT > 0.85) { this._startLevel(1); this.state = 'playing'; }
+      // DEATH RESETS TO LEVEL 1 (unless level 10)
+      if (this.stateT > 0.85) { this._startLevel(this.level >= 10 ? 10 : 1); this.state = 'playing'; }
     }
     if (this.state === 'levelUp') {
       this.stateT += dt;
