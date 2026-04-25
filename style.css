@@ -1,0 +1,74 @@
+*, *::before, *::after { margin: 0; padding: 0; box-sizing: border-box; }
+
+html, body {
+  width: 100%; height: 100%; overflow: hidden;
+  background: #030308;
+  touch-action: none;
+  -webkit-touch-callout: none;
+  -webkit-user-select: none;
+  user-select: none;
+  -webkit-tap-highlight-color: transparent;
+}
+
+#gameCanvas {
+  display: block; width: 100vw; height: 100vh;
+  touch-action: none; cursor: pointer;
+}
+
+/* ---- Chat Bar ---- */
+#chatbar {
+  position: fixed;
+  bottom: 12px;
+  left: 50%;
+  transform: translateX(-50%);
+  display: flex;
+  align-items: center;
+  gap: 6px;
+  background: rgba(4, 4, 18, 0.88);
+  border: 1px solid rgba(0, 255, 234, 0.15);
+  border-radius: 8px;
+  padding: 5px 14px;
+  z-index: 10;
+  transition: border-color 0.3s, box-shadow 0.3s;
+  max-width: 90vw;
+}
+#chatbar:focus-within {
+  border-color: rgba(0, 255, 234, 0.45);
+  box-shadow: 0 0 18px rgba(0, 255, 234, 0.08);
+}
+
+#chatPrefix {
+  color: rgba(0, 255, 234, 0.4);
+  font: 600 13px 'Rajdhani', monospace;
+  flex-shrink: 0;
+}
+
+#chatInput {
+  background: transparent;
+  border: none;
+  color: #00ffea;
+  font: 500 14px 'Rajdhani', monospace;
+  outline: none;
+  width: 130px;
+  caret-color: #00ffea;
+}
+#chatInput::placeholder {
+  color: rgba(0, 255, 234, 0.2);
+  font-weight: 300;
+}
+
+#chatFeedback {
+  font: 600 11px 'Rajdhani', sans-serif;
+  white-space: nowrap;
+  transition: opacity 0.5s;
+}
+#chatFeedback.success { color: #00ff88; }
+#chatFeedback.error { color: #ff4466; }
+#chatFeedback.info { color: #ffcc00; }
+
+/* Mobile adjustments */
+@media (max-width: 600px) {
+  #chatbar { padding: 4px 10px; bottom: 8px; }
+  #chatInput { width: 100px; font-size: 13px; }
+  #chatPrefix { font-size: 11px; }
+}
