@@ -304,6 +304,10 @@ class Game {
       this.sfx.cheat();
       show('0.5x SPEED ACTIVE', 'success');
       this.cheatFeedbackT = 3;
+    } else if (code === '70199') {
+      this.sfx.cheat();
+      this._startLevel(10);
+      show('WARP TO LEVEL 10', 'success');
     } else {
       show('INVALID CODE', 'error');
     }
